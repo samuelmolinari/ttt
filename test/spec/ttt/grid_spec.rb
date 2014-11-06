@@ -20,6 +20,23 @@ describe ::TTT::Grid do
     end
   end
 
+  describe '#empty_cell?' do
+    let(:cell_index) { 1 }
+    context 'when cell is empty' do
+      it 'returns true' do
+        expect(grid.empty_cell?(cell_index)).to be true
+      end
+    end
+    context 'when cell is set' do
+      before(:each) do
+        grid.store[cell_index] = false
+      end
+      it 'returns false' do
+        expect(grid.empty_cell?(cell_index)).to be false
+      end
+    end
+  end
+
   describe '#full?' do
     context 'grid is full' do
 
