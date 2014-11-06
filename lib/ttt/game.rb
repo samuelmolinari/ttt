@@ -72,6 +72,7 @@ class ::TTT::Game
     return next_player
   end
 
+  # TODO Could be more efficient
   def has_won?(player)
     return true if winning_array?(player, @grid.first_diagonal) || winning_array?(player, @grid.second_diagonal)
     ::TTT::Grid::SIZE.times.each do |i|
