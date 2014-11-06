@@ -91,6 +91,7 @@ class ::TTT::Grid
   end
 
   def convert_cell_code(cell_code)
+    raise AgumentError if cell_code.size != 2
     cell_code = cell_code.downcase
     
     # Get the letter, get its code and reduce it to match its index
