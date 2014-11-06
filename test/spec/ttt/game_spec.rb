@@ -12,9 +12,13 @@ describe ::TTT::Game do
   end
 
   subject(:game) { described_class.new }
-  let(:grid) { game.grid }
+  let(:grid) { game.instance_variable_get(:@grid) }
 
-  it { is_expected.to have_attributes(:grid => ::TTT::Grid.new, :human => 'X', :computer => 'O') }
+  it { is_expected.to have_attributes(:human => 'X', :computer => 'O') }
+
+  it 'have attribute grid' do
+    expect(game.instance_variable_get(:@grid)).to eq ::TTT::Grid.new
+  end
 
   describe 'computer_move' do
     before(:each) do

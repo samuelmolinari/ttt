@@ -3,7 +3,7 @@ require_relative './grid.rb'
 
 class ::TTT::Game
 
-  attr_reader :human, :computer, :grid
+  attr_reader :human, :computer
 
   X = 'X'
   O = 'O'
