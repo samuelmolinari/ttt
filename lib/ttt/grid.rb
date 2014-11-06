@@ -7,8 +7,26 @@ class ::TTT::Grid
   SIZE  = 3
   CELLS = SIZE**2
 
+  FIRST_COLUMN_LETTER = 'a'
+  FIRST_ROW_NUMBER = 1
+
   def initialize
     @store = Array.new(CELLS)
+  end
+
+  def set(cell_code, value)
+    index = cell_index(cell_code)
+    return set_at(index, value)
+  end
+
+  def set_at(index, value)
+    raise IndexError if index >= size
+    raise ::TTT::Grid::GridIsFull if full?
+    raise ::TTT::Grid::CellIsNotEmpty unless empty_cell?(index)
+
+    @store[index] = value
+
+    return self
   end
 
   def full?
@@ -29,4 +47,35 @@ class ::TTT::Grid
     @store.size
   end
 
+  protected
+
+  def cell_index(cell_code)
+    cell = convert_cell_code(cell_code)
+    return cell_index_at(cell[:row],cell[:column])
+  end
+
+  def cell_index_at(row,column)
+    return (row * SIZE) + column
+  end
+
+  def convert_cell_code(cell_code)
+    cell_code = cell_code.downcase
+    
+    # Get the letter, get its code and reduce it to match its index
+    column = cell_code.scan(/[a-z]/)[0].ord - FIRST_COLUMN_LETTER[0].ord
+    # Get the number, convert it to integer and reduce it to match its index
+    row = cell_code.scan(/[0-9]/)[0].to_i - FIRST_ROW_NUMBER
+    
+    return {
+      :row => row,
+      :column => column
+    }
+  end
+
+end
+
+class ::TTT::Grid::GridIsFull < Exception
+end
+
+class ::TTT::Grid::CellIsNotEmpty < Exception
 end

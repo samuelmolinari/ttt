@@ -20,6 +20,53 @@ describe ::TTT::Grid do
     end
   end
 
+  describe '#set' do
+    it 'returns self' do
+      expect(grid.set('A1', true)).to be grid
+    end
+
+    context 'when cell is valid' do
+      let!(:valid_cell_1) { ({ code: 'A1', index: 0, value: 'Hi!' }) }
+      let!(:valid_cell_2) { ({ code: 'B2', index: 4, value: 'Futurelearn' }) }
+      let!(:valid_cell_3) { ({ code: 'C3', index: 8, value: '!' }) }
+
+      it 'stores value in the right cells' do
+        [valid_cell_1, valid_cell_2, valid_cell_3].each do |cell|
+          expect(grid.set(cell[:code], cell[:value]).store[cell[:index]]).to eq cell[:value]
+        end
+      end
+    end
+
+    context 'when grid is full' do
+      before(:each) do
+        grid.instance_variable_set(:@store, Array.new(described_class::CELLS, true))
+      end
+
+      it 'raises a GridIsFull exception' do
+        expect { grid.set('A1', true) }.to raise_exception ::TTT::Grid::GridIsFull 
+      end
+    end
+
+    context 'when cell is not empty' do
+      let(:cell_code) { 'A1' }
+      before(:each) do
+        grid.set(cell_code, true)
+      end
+
+      it 'raises a CellIsNotEmpty exception' do
+        expect { grid.set(cell_code, true) }.to raise_exception ::TTT::Grid::CellIsNotEmpty
+      end
+    end
+
+    context 'when cell is out of bounds' do
+      let(:cell_out_of_bound) { 'D4' }
+
+      it 'raises a IndexError exception' do
+        expect { grid.set(cell_out_of_bound, true) }.to raise_exception IndexError
+      end
+    end
+  end
+
   describe '#empty_cell?' do
     let(:cell_index) { 1 }
     context 'when cell is empty' do
@@ -60,7 +107,6 @@ describe ::TTT::Grid do
   end
 
   describe '#remaining_cell_indexes' do
-
     before(:each) do
       grid.instance_variable_set(:@store, [1,2,3,4,5,6,nil,nil,nil])
     end
