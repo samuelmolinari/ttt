@@ -1,3 +1,4 @@
+require_relative '../spec_helper'
 require 'ttt/game'
 
 describe ::TTT::Game do
