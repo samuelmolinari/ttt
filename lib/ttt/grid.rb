@@ -75,13 +75,18 @@ class ::TTT::Grid
     other.store == self.store
   end
 
-  # TODO Generate column headers dynamically
   def to_s
-    str =   "\n          A   B   C\n\n"
-    str +=  "        +---+---+---+\n"
-    SIZE.times.each do |row|
-      str += "    #{row + 1}   |" + SIZE.times.map { |column| " #{ @store[cell_index_at(row,column)] || " " } |" }.join + "\n"
-      str += "        +---+---+---+\n"
+    char = (FIRST_COLUMN_LETTER.upcase.codepoints.first - 1).chr
+    tab = "        "
+
+    column_headers = "\n" + tab + SIZE.times.map { "  #{char.next!} " }.join + "\n\n"
+    horizontal_split = tab + "+" + SIZE.times.map { "---+" }.join + "\n"
+
+    str = column_headers
+    str += horizontal_split
+    SIZE.times.each.with_index do |row,i|
+      str += "    #{FIRST_ROW_NUMBER + i}   |" + SIZE.times.map { |column| " #{ @store[cell_index_at(row,column)] || " " } |" }.join + "\n"
+      str += horizontal_split
     end
     return str + "\n"
   end
