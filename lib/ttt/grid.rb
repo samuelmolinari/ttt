@@ -29,6 +29,13 @@ class ::TTT::Grid
     return self
   end
 
+  def row(n)
+    SIZE.times.map do |i|
+      cell_index = (SIZE * n) + i
+      @store[cell_index]
+    end
+  end
+
   def full?
     remaining_cell_indexes.size == 0
   end

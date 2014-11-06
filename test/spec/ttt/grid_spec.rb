@@ -116,4 +116,17 @@ describe ::TTT::Grid do
     end
   end
 
+  describe '#row' do
+
+    before(:each) do
+      grid.instance_variable_set(:@store, [1,2,3,4,nil,6,nil,8,nil])
+    end
+
+    it 'returns the given row as an array' do
+      expect(grid.row(0)).to eq [1,2,3]
+      expect(grid.row(1)).to eq [4,nil,6]
+      expect(grid.row(2)).to eq [nil,8,nil]
+    end
+  end
+
 end
