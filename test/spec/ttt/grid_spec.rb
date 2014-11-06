@@ -20,6 +20,28 @@ describe ::TTT::Grid do
     end
   end
 
+  describe '#full?' do
+    context 'grid is full' do
+
+      before(:each) do
+        grid.instance_variable_set(:@store, Array.new(described_class::CELLS, true))
+      end
+
+      it 'returns true' do
+        expect(grid).to be_full
+      end
+    end
+    context 'grid is not full' do
+      before(:each) do
+        grid.instance_variable_set(:@store, [1,2,3,4,5,6,nil,nil,nil])
+      end
+
+      it 'returns false' do
+        expect(grid).not_to be_full
+      end
+    end
+  end
+
   describe '#remaining_cell_indexes' do
 
     before(:each) do

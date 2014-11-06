@@ -11,6 +11,10 @@ class ::TTT::Grid
     @store = Array.new(CELLS)
   end
 
+  def full?
+    remaining_cell_indexes.size == 0
+  end
+
   def remaining_cell_indexes
     @store.map.with_index do |value,index|
       value.nil? ? index : nil
