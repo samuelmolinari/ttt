@@ -20,4 +20,15 @@ describe ::TTT::Grid do
     end
   end
 
+  describe '#remaining_cell_indexes' do
+
+    before(:each) do
+      grid.instance_variable_set(:@store, [1,2,3,4,5,6,nil,nil,nil])
+    end
+
+    it 'returns array of index of cells that are empty' do
+      expect(grid.remaining_cell_indexes).to eq [6,7,8]
+    end
+  end
+
 end
