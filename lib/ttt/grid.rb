@@ -30,30 +30,26 @@ class ::TTT::Grid
   end
 
   def row(n)
-    SIZE.times.map do |i|
-      cell_index = (SIZE * n) + i
-      @store[cell_index]
-    end
+    get_set(n) { |index,row| (SIZE * row) + index }
   end
 
   def column(n)
-    SIZE.times.map do |i|
-      cell_index = (SIZE * i) + n
-      @store[cell_index]
-    end
+    get_set(n) { |index,column| (SIZE * index) + column }
   end
 
   def first_diagonal
-    SIZE.times.map do |n|
-      cell_index = (SIZE * n) + n
-      @store[cell_index]
+    get_set do |index|
+      row = (SIZE * index)
+      column = index
+      row + column
     end
   end
 
   def second_diagonal
-    SIZE.times.map do |n|
-      cell_index = (SIZE * n) + (SIZE - (n + 1))
-      @store[cell_index]
+    get_set do |index|
+      row = (SIZE * index)
+      column = (SIZE - (index + 1))
+      row + column
     end
   end
 
@@ -91,6 +87,13 @@ class ::TTT::Grid
   end
 
   protected
+
+  def get_set(n = 0)
+    SIZE.times.map do |index|
+      cell_index = yield(index,n)
+      @store[cell_index]
+    end
+  end
 
   def cell_index(cell_code)
     cell = convert_cell_code(cell_code)
