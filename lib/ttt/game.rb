@@ -14,4 +14,15 @@ class ::TTT::Game
     @grid = ::TTT::Grid.new
   end
 
+  def computer_move
+    index = algorithm
+    @grid.set_at(index, @computer)
+  end
+
+  protected
+
+  def algorithm
+    return @grid.remaining_cell_indexes.shuffle.first
+  end
+
 end
