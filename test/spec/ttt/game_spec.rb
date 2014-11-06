@@ -71,4 +71,50 @@ describe ::TTT::Game do
     end
   end
 
+  describe '#has_won?' do
+    let(:winner) { game.human }
+
+    context 'with winning row' do
+      before(:each) do
+        grid.instance_variable_set(:@store, [winner, winner, winner,nil,nil,nil,nil,nil,nil])
+      end
+      it 'returns true' do
+        expect(game.has_won?(winner)).to be true
+      end
+    end
+
+    context 'with winning column' do
+      before(:each) do
+        grid.instance_variable_set(:@store, [winner,nil,nil,winner,nil,nil,winner,nil,nil])
+      end
+      it 'returns true' do
+        expect(game.has_won?(winner)).to be true
+      end
+    end
+
+    context 'with winning first diagonal' do
+      before(:each) do
+        grid.instance_variable_set(:@store, [winner,nil,nil,nil,winner,nil,nil,nil,winner])
+      end
+      it 'returns true' do
+        expect(game.has_won?(winner)).to be true
+      end
+    end
+
+    context 'with winning second diagonal' do
+      before(:each) do
+        grid.instance_variable_set(:@store, [nil,nil,winner,nil,winner,nil,winner,nil,nil])
+      end
+      it 'returns true' do
+        expect(game.has_won?(winner)).to be true
+      end
+    end
+    
+    context 'with no winning set' do
+      it 'returns false' do
+        expect(game.has_won?(winner)).to be false
+      end
+    end
+  end
+
 end

@@ -39,10 +39,32 @@ class ::TTT::Game
     return next_player
   end
 
+  def has_won?(player)
+    return true if winning_array?(player, @grid.first_diagonal) || winning_array?(player, @grid.second_diagonal)
+    ::TTT::Grid::SIZE.times.each do |i|
+      return true if winning_array?(player, @grid.row(i)) || winning_array?(player, @grid.column(i))
+    end
+    return false
+  end
+
+  def won!(player)
+    puts @grid.to_s
+    puts "#{player} has won!"
+  end
+
+  def draw!
+    puts @grid.to_s
+    puts "It's a draw!"
+  end
+
   protected
 
   def algorithm
     return @grid.remaining_cell_indexes.shuffle.first
+  end
+
+  def winning_array?(player, arr)
+    arr.count(player) == ::TTT::Grid::SIZE
   end
 
 end
