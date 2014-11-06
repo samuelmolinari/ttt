@@ -84,11 +84,13 @@ class ::TTT::Game
   def won!(player)
     puts @grid.to_s
     puts "#{player} has won!"
+    return player
   end
 
   def draw!
     puts @grid.to_s
     puts "It's a draw!"
+    return nil
   end
 
   protected
