@@ -43,6 +43,20 @@ class ::TTT::Grid
     end
   end
 
+  def first_diagonal
+    SIZE.times.map do |n|
+      cell_index = (SIZE * n) + n
+      @store[cell_index]
+    end
+  end
+
+  def second_diagonal
+    SIZE.times.map do |n|
+      cell_index = (SIZE * n) + (SIZE - (n + 1))
+      @store[cell_index]
+    end
+  end
+
   def full?
     remaining_cell_indexes.size == 0
   end

@@ -117,7 +117,6 @@ describe ::TTT::Grid do
   end
 
   describe '#row' do
-
     before(:each) do
       grid.instance_variable_set(:@store, [1,2,3,4,nil,6,nil,8,nil])
     end
@@ -130,7 +129,6 @@ describe ::TTT::Grid do
   end
 
   describe '#column' do
-
     before(:each) do
       grid.instance_variable_set(:@store, [1,2,3,4,nil,6,nil,8,nil])
     end
@@ -139,6 +137,26 @@ describe ::TTT::Grid do
       expect(grid.column(0)).to eq [1,4,nil]
       expect(grid.column(1)).to eq [2,nil,8]
       expect(grid.column(2)).to eq [3,6,nil]
+    end
+  end
+
+  describe '#first_diagonal' do
+    before(:each) do
+      grid.instance_variable_set(:@store, [1,nil,nil,nil,5,6,nil,8,9])
+    end
+
+    it 'returns the diagonal starting from the top left to the bottom right' do
+      expect(grid.first_diagonal).to eq [1,5,9]
+    end
+  end
+
+  describe '#second_diagonal' do
+    before(:each) do
+      grid.instance_variable_set(:@store, [1,nil,3,nil,5,6,7,8,9])
+    end
+
+    it 'returns the diagonal starting from the top right to the bottom left' do
+      expect(grid.second_diagonal).to eq [3,5,7]
     end
   end
 
