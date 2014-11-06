@@ -79,6 +79,17 @@ class ::TTT::Grid
     other.store == self.store
   end
 
+  # TODO Generate column headers dynamically
+  def to_s
+    str =   "\n          A   B   C\n\n"
+    str +=  "        +---+---+---+\n"
+    SIZE.times.each do |row|
+      str += "    #{row + 1}   |" + SIZE.times.map { |column| " #{ @store[cell_index_at(row,column)] || " " } |" }.join + "\n"
+      str += "        +---+---+---+\n"
+    end
+    return str + "\n"
+  end
+
   protected
 
   def cell_index(cell_code)

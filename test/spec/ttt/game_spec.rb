@@ -109,12 +109,22 @@ describe ::TTT::Game do
         expect(game.has_won?(winner)).to be true
       end
     end
-    
+
     context 'with no winning set' do
       it 'returns false' do
         expect(game.has_won?(winner)).to be false
       end
     end
+  end
+
+  describe '#start' do
+    xit 'ask user to choose what player they want to be'
+    xit 're-ask if the input is not X or O'
+  end
+
+  describe '#play' do
+    xit 'keeps on playing until there is a winner or it\'s a draw'
+    xit 'prompt use to enter its cell code'
   end
 
 end

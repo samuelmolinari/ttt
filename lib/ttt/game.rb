@@ -14,6 +14,39 @@ class ::TTT::Game
     @grid = ::TTT::Grid.new
   end
 
+  # TODO Test
+  def start
+    puts 'Which player do you want to be? X or O?'
+    player = gets.chomp
+    parse_player_selection(player)
+
+    # Randomly pick first player
+    play([X,O].shuffle.first)
+
+    return
+  rescue ArgumentError
+    puts 'Invalid, can only be X or O'
+    start
+  end
+
+  def play(current_player)
+    next_player = nil
+
+    if current_player == @computer
+      next_player = computer_move
+    else
+      puts @grid.to_s
+      puts "Where do you want to move?"
+      cell ||= gets.chomp
+      next_player = human_move(cell)
+    end
+
+    return won!(current_player) if has_won?(current_player)
+    return draw! if @grid.full?
+
+    play(next_player)
+  end
+
   def computer_move
     index = algorithm
     @grid.set_at(index, @computer)
@@ -59,6 +92,18 @@ class ::TTT::Game
 
   protected
 
+  def parse_player_selection(selection)
+    raise ArgumentError unless selection == X || selection == O
+    if selection == X
+      @human = X
+      @computer = O
+    elsif selection == O
+      @human = O
+      @computer = X
+    end
+  end
+
+  # TODO Improvate algorithm
   def algorithm
     return @grid.remaining_cell_indexes.shuffle.first
   end
