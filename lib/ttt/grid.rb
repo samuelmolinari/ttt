@@ -75,6 +75,10 @@ class ::TTT::Grid
     @store.size
   end
 
+  def ==(other)
+    other.store == self.store
+  end
+
   protected
 
   def cell_index(cell_code)
